@@ -4,6 +4,7 @@
 
 * FIX: HTTP results did not parse `af`, `src_addr` and `dst_addr` into base results.
   Reported by @moonracker
+* FIX: `dnsstat` results were case sensitive therefore missed merging of some answers
 
 ## v0.8.0
 

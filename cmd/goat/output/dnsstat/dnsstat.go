@@ -117,7 +117,7 @@ func process(res any) {
 			case len(resp.Error) > 0: // collect TIMEOUTs separetely
 				key = "TIMEOUT"
 			default: // for the rest: extract "useful data"
-				key = output.OutputDnsResponseFocus(&resp, typeFocus)
+				key = strings.ToLower(output.OutputDnsResponseFocus(&resp, typeFocus))
 			}
 
 			// count how many of these we had
