@@ -31,6 +31,8 @@ func commandSelector() {
 		commandVersion()
 	case args[0] == "findprobe" || args[0] == "fp":
 		commandFindProbe(args[1:])
+	case args[0] == "probetags" || args[0] == "pt":
+		commandListProbTags(args[1:])
 	case args[0] == "findanchor" || args[0] == "fa":
 		commandFindAnchor(args[1:])
 	case args[0] == "findmsm" || args[0] == "fm":
@@ -74,6 +76,7 @@ func printUsage() {
 	fmt.Println("	help             this page")
 	fmt.Println("	version          print version")
 	fmt.Println("	fp|findprobe     search for probes")
+	fmt.Println("	pt|probetags     list probe tags")
 	fmt.Println("	fa|findanchor    search for achors")
 	fmt.Println("	fm|findmsm       search for measurements")
 	fmt.Println("	result           download results")
