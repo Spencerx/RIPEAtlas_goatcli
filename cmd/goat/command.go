@@ -32,7 +32,7 @@ func commandSelector() {
 	case args[0] == "findprobe" || args[0] == "fp":
 		commandFindProbe(args[1:])
 	case args[0] == "probetags" || args[0] == "pt":
-		commandListProbTags(args[1:])
+		commandListProbeTags(args[1:])
 	case args[0] == "findanchor" || args[0] == "fa":
 		commandFindAnchor(args[1:])
 	case args[0] == "findmsm" || args[0] == "fm":

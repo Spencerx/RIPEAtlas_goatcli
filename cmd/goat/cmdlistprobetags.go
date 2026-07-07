@@ -14,13 +14,13 @@ import (
 )
 
 // struct to receive/store command line args for probe tag filtering
-type listProbTagsFlags struct {
-	filterSlug            string
-	filterSlugContains    string
-	filterSlugStartsWith  string
-	filterName            string
-	filterNameContains    string
-	filterNameStartsWith  string
+type listProbeTagsFlags struct {
+	filterSlug           string
+	filterSlugContains   string
+	filterSlugStartsWith string
+	filterName           string
+	filterNameContains   string
+	filterNameStartsWith string
 
 	limit uint
 	count bool
@@ -28,8 +28,8 @@ type listProbTagsFlags struct {
 
 // Implementation of the "probetags" subcommand. Parses command line flags
 // and interacts with goatAPI to apply those filters+options to fetch results
-func commandListProbTags(args []string) {
-	flags := parseListProbTagsArgs(args)
+func commandListProbeTags(args []string) {
+	flags := parseListProbeTagsArgs(args)
 
 	// single tag retrieval shortcut: exact slug with no other filters set
 	if flags.filterSlug != "" &&
@@ -47,7 +47,7 @@ func commandListProbTags(args []string) {
 		return
 	}
 
-	filter := parseListProbTagsFlags(flags)
+	filter := parseListProbeTagsFlags(flags)
 
 	// counting only
 	if flags.count {
@@ -74,7 +74,7 @@ func commandListProbTags(args []string) {
 }
 
 // Process flags (filters & options), pass them on to goatAPI
-func parseListProbTagsFlags(flags *listProbTagsFlags) *goat.ProbeTagFilter {
+func parseListProbeTagsFlags(flags *listProbeTagsFlags) *goat.ProbeTagFilter {
 	filter := goat.NewProbeTagFilter()
 	filter.Verbose(flagVerbose)
 
@@ -105,20 +105,27 @@ func parseListProbTagsFlags(flags *listProbTagsFlags) *goat.ProbeTagFilter {
 }
 
 // Define and parse command line args for this subcommand using the flags package
-func parseListProbTagsArgs(args []string) *listProbTagsFlags {
-	var flags listProbTagsFlags
+func parseListProbeTagsArgs(args []string) *listProbeTagsFlags {
+	var flags listProbeTagsFlags
 
-	flagsListProbTags.StringVar(&flags.filterSlug, "slug", "", "Filter by exact slug match (retrieves a single tag when used alone)")
-	flagsListProbTags.StringVar(&flags.filterSlugContains, "slug-contains", "", "Filter for tags with slugs containing a substring")
-	flagsListProbTags.StringVar(&flags.filterSlugStartsWith, "slug-startswith", "", "Filter for tags with slugs starting with a prefix")
-	flagsListProbTags.StringVar(&flags.filterName, "name", "", "Filter by exact name match")
-	flagsListProbTags.StringVar(&flags.filterNameContains, "name-contains", "", "Filter for tags with names containing a substring")
-	flagsListProbTags.StringVar(&flags.filterNameStartsWith, "name-startswith", "", "Filter for tags with names starting with a prefix")
+	flagsListProbeTags.StringVar(&flags.filterSlug, "slug", "",
+		"Filter by exact slug match (retrieves a single tag when used alone)")
+	flagsListProbeTags.StringVar(&flags.filterSlugContains, "slug-contains", "",
+		"Filter for tags with slugs containing a substring")
+	flagsListProbeTags.StringVar(&flags.filterSlugStartsWith, "slug-startswith", "",
+		"Filter for tags with slugs starting with a prefix")
+	flagsListProbeTags.StringVar(&flags.filterName, "name", "", "Filter by exact name match")
+	flagsListProbeTags.StringVar(&flags.filterNameContains, "name-contains", "",
+		"Filter for tags with names containing a substring")
+	flagsListProbeTags.StringVar(&flags.filterNameStartsWith, "name-startswith", "",
+		"Filter for tags with names starting with a prefix")
 
-	flagsListProbTags.BoolVar(&flags.count, "count", false, "Count only, don't show the actual results")
-	flagsListProbTags.UintVar(&flags.limit, "limit", 0, "Maximum number of tags to retrieve (0 = all)")
+	flagsListProbeTags.BoolVar(&flags.count, "count", false,
+		"Count only, don't show the actual results")
+	flagsListProbeTags.UintVar(&flags.limit, "limit", 0,
+		"Maximum number of tags to retrieve (0 = all)")
 
-	_ = flagsListProbTags.Parse(args)
+	_ = flagsListProbeTags.Parse(args)
 
 	return &flags
 }

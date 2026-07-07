@@ -26,14 +26,14 @@ var (
 	flagAPIEnvKey string
 
 	// subcommand specific arguments
-	flagsVersion      *flag.FlagSet
-	flagsFindProbe    *flag.FlagSet
-	flagsFindAnchor   *flag.FlagSet
-	flagsFindMsm      *flag.FlagSet
-	flagsGetResult    *flag.FlagSet
-	flagsStatusCheck  *flag.FlagSet
-	flagsMeasure      *flag.FlagSet
-	flagsListProbTags *flag.FlagSet
+	flagsVersion       *flag.FlagSet
+	flagsFindProbe     *flag.FlagSet
+	flagsFindAnchor    *flag.FlagSet
+	flagsFindMsm       *flag.FlagSet
+	flagsGetResult     *flag.FlagSet
+	flagsStatusCheck   *flag.FlagSet
+	flagsMeasure       *flag.FlagSet
+	flagsListProbeTags *flag.FlagSet
 
 	apiKey  *uuid.UUID           // specified on the command line explicitly or via env
 	apiKeys map[string]uuid.UUID // collected from config file
@@ -46,9 +46,11 @@ var (
 	probeSpecReuse  string
 )
 
-var defaultConfigDir = os.Getenv("HOME") + "/.config"
-var defaultConfigFile = defaultConfigDir + "/goat.ini"
-var CacheDir string = os.Getenv("HOME") + "/.cache/goat/"
+var (
+	defaultConfigDir         = os.Getenv("HOME") + "/.config"
+	defaultConfigFile        = defaultConfigDir + "/goat.ini"
+	CacheDir          string = os.Getenv("HOME") + "/.cache/goat/"
+)
 
 var Subcommands map[string]*flag.FlagSet
 
@@ -96,7 +98,7 @@ func configure() {
 	flagsGetResult = flag.NewFlagSet("result", flag.ExitOnError)
 	flagsStatusCheck = flag.NewFlagSet("status", flag.ExitOnError)
 	flagsMeasure = flag.NewFlagSet("measure", flag.ExitOnError)
-	flagsListProbTags = flag.NewFlagSet("probetags", flag.ExitOnError)
+	flagsListProbeTags = flag.NewFlagSet("probetags", flag.ExitOnError)
 
 	Subcommands = map[string]*flag.FlagSet{
 		flagsVersion.Name():     flagsVersion,
@@ -165,7 +167,7 @@ func readConfig(confFile string) bool {
 		CacheDir = cachedir
 	}
 	// we deliberately ignore errors on creating this dir as it may exist
-	_ = os.MkdirAll(CacheDir, os.FileMode(0755))
+	_ = os.MkdirAll(CacheDir, os.FileMode(0o755))
 
 	// load probe specification defaults
 	probeSpecCc = cfg.Section("probespec").Key("probecc").MustString("")
@@ -183,7 +185,7 @@ func createConfig(confFile string) {
 	// TODO: perhaps try to make the config directory first?
 
 	// we deliberately ignore errors on creating this dir as it may exist
-	_ = os.MkdirAll(defaultConfigDir, os.FileMode(0700))
+	_ = os.MkdirAll(defaultConfigDir, os.FileMode(0o700))
 
 	f, err := os.Create(confFile)
 	if err != nil && flagVerbose {
