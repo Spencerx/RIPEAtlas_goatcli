@@ -46,6 +46,48 @@
 ```
 
 
+## Finding Probe Tags
+
+Probe tags are short labels attached to probes. Each tag has a human-readable `Name` and a URL-safe `Slug`. Use these to discover available tags before filtering probes with `FilterTags()`.
+
+### Count Tags Matching Some Criteria
+
+```go
+	filter := goat.NewProbeTagFilter()
+	filter.FilterNameStartsWith("system")
+	count, err := filter.GetProbeTagCount()
+	if err != nil {
+		// handle the error
+	}
+	fmt.Println(count)
+```
+
+### Search for Tags
+
+```go
+	filter := goat.NewProbeTagFilter()
+	filter.FilterSlugContains("ipv6")
+	tags := make(chan goat.AsyncTagResult)
+	go filter.GetProbeTags(tags)
+	for tag := range tags {
+		if tag.Err != nil {
+			// handle the error
+		} else {
+			fmt.Printf("%s\t%s\n", tag.Tag.Slug, tag.Tag.Name)
+		}
+	}
+```
+
+### Get a Particular Tag
+
+```go
+	tag, err := goat.GetProbeTag(false, "home") // false means non-verbose
+	if err != nil {
+		// handle the error
+	}
+	fmt.Printf("%s\t%s\n", tag.Slug, tag.Name)
+```
+
 ## Finding Anchors
 
 ### Count Anchors Matching Some Criteria

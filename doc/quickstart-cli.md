@@ -28,6 +28,49 @@ $ ./goat findprobe --id 10001
 10001	Connected	"NL" N/A	AS206238	AS206238	[4.9275 52.3475]
 ```
 
+## Finding Probe Tags
+
+Probe tags are short labels attached to probes (e.g. `home`, `datacenter`). Each tag has a human-readable name and a URL-safe slug. Use the `probetags` (or `pt`) subcommand to discover which tags exist before filtering probes with `--tags`.
+
+### Count Tags Matching Some Criteria
+
+```sh
+$ ./goat probetags --name-startswith "system" --count
+42
+```
+
+### List All Probe Tags
+
+```sh
+$ ./goat probetags --limit 5
+home	Home
+datacenter	Datacenter
+system-ipv4-works	system-ipv4-works
+system-ipv6-works	system-ipv6-works
+system-resolves-a-correctly	system-resolves-a-correctly
+```
+
+Output is tab-separated `slug` followed by `name` per line.
+
+### Filter Tags by Name or Slug
+
+```sh
+# tags whose slug contains "ipv6"
+$ ./goat probetags --slug-contains ipv6
+
+# tags whose name starts with "system"
+$ ./goat probetags --name-startswith system
+```
+
+### Get a Particular Tag
+
+When `--slug` is the only flag, the single-tag retrieval endpoint is used directly:
+
+```sh
+$ ./goat probetags --slug home
+home	Home
+```
+
 ## Finding Anchors
 
 ### Count Anchors Matching Some Criteria
