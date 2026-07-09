@@ -4,6 +4,11 @@
 
 * ...
 
+## v0.9.0
+
+* NEW: `pt|probetags` command and API connector for searching for probe tags
+* CHANGE: dependency updates
+
 ## v0.8.1
 
 * FIX: HTTP results did not parse `af`, `src_addr` and `dst_addr` into base results.
