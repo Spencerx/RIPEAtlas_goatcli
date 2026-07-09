@@ -7,6 +7,7 @@
 ## v0.9.0
 
 * NEW: `pt|probetags` command and API connector for searching for probe tags
+  Contributed by @davidbirdsong
 * CHANGE: dependency updates
 
 ## v0.8.1
