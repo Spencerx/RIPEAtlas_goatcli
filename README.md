@@ -9,7 +9,7 @@ It also provides a CLI interface to most of the APIs. It is similar to
 combined.
 
 It supports:
-* finding probes, anchors and measurements
+* finding probes, probe tags, anchors and measurements
 * scheduling new measurements and immediately show their results
 * stopping existing measurements
 * modify participants of an existing measurement (add/remove probes)
