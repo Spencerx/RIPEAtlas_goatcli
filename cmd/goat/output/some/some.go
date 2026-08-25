@@ -48,6 +48,9 @@ func setup(isverbose bool, options []string) {
 			connectTableOutput = true
 			break
 		}
+		if opt == "ts" {
+			output.PrependTs = true
+		}
 	}
 }
 
@@ -78,6 +81,8 @@ func process(res any) {
 			addConnectionEvent(rt)
 		case *result.UptimeResult:
 			out = SomeOutputUptime(rt)
+		default:
+			out = fmt.Sprintf("No output formatter defined for result type '%T'\n", rt)
 		}
 	case goat.AsyncAnchorResult:
 		out = t.Anchor.ShortString()
@@ -92,7 +97,7 @@ func process(res any) {
 	}
 
 	if out != "" {
-		fmt.Println(out)
+		output.Print(out)
 		total++
 	}
 }

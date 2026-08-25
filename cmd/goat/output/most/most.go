@@ -41,46 +41,56 @@ func supports(outtype string) bool {
 
 func setup(isverbose bool, options []string) {
 	verbose = isverbose
+	for _, opt := range options {
+		if opt == "ts" {
+			output.PrependTs = true
+		}
+	}
 }
 
 func start() {
 }
 
 func process(res any) {
-	total++
+	out := ""
 
 	switch t := res.(type) {
 	case *result.Result:
 		switch rt := (*t).(type) {
 		case *result.PingResult:
-			fmt.Println(mostOutputPing(rt))
+			out = mostOutputPing(rt)
 		case *result.DnsResult:
-			fmt.Println(mostOutputDns(rt))
+			out = mostOutputDns(rt)
 		case *result.TracerouteResult:
-			fmt.Println(mostOutputTraceroute(rt))
+			out = mostOutputTraceroute(rt)
 		case *result.CertResult:
-			fmt.Println(mostOutputCert(rt))
+			out = mostOutputCert(rt)
 		case *result.HttpResult:
-			fmt.Println(mostOutputHttp(rt))
+			out = mostOutputHttp(rt)
 		case *result.NtpResult:
-			fmt.Println(mostOutputNtp(rt))
+			out = mostOutputNtp(rt)
 		case *result.ConnectionResult:
-			fmt.Println(mostOutputConnection(rt))
+			out = mostOutputConnection(rt)
 		case *result.UptimeResult:
-			fmt.Println(mostOutputUptime(rt))
+			out = mostOutputUptime(rt)
 		default:
-			fmt.Printf("No output formatter defined for result type '%T'\n", rt)
+			out = fmt.Sprintf("No output formatter defined for result type '%T'\n", rt)
 		}
 	case goat.AsyncAnchorResult:
-		fmt.Println(t.Anchor.LongString())
+		out = t.Anchor.LongString()
 	case goat.AsyncProbeResult:
-		fmt.Println(t.Probe.LongString())
+		out = t.Probe.LongString()
 	case goat.AsyncMeasurementResult:
-		fmt.Println(t.Measurement.LongString())
+		out = t.Measurement.LongString()
 	case goat.AsyncStatusCheckResult:
-		fmt.Println(t.Status.LongString())
+		out = t.Status.LongString()
 	default:
-		fmt.Printf("No output formatter defined for object type '%T'\n", t)
+		out = fmt.Sprintf("No output formatter defined for object type '%T'\n", t)
+	}
+
+	if out != "" {
+		output.Print(out)
+		total++
 	}
 }
 

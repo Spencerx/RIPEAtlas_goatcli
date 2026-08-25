@@ -2,7 +2,8 @@
 
 ## next
 
-* ...
+* ADD: the new `ts` option prepends each result line with the current timestamp for the "some" and "most" output formatters
+* CHANGE: dependency updates
 
 ## v0.9.0
 

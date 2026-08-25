@@ -20,6 +20,7 @@ package output
 
 import (
 	"fmt"
+	"time"
 )
 
 type outform struct {
@@ -32,6 +33,9 @@ type outform struct {
 }
 
 var formats map[string]outform
+var PrependTs bool
+
+const prependTsFormat string = "2006-01-02T15:04:05Z"
 
 // package init
 func init() {
@@ -96,4 +100,12 @@ func Finish(format string) {
 		// this should not happen - as long as VerifyFormatter was properly used
 		panic(fmt.Sprintf("Unknown formatter %s was called\n", format))
 	}
+}
+
+func Print(msg string) {
+	if PrependTs {
+		t := time.Now().UTC()
+		fmt.Print(t.Format(prependTsFormat), "\t")
+	}
+	fmt.Println(msg)
 }

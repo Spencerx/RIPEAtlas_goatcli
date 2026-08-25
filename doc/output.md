@@ -41,6 +41,8 @@ In addition, on the same line as the basic fields, the following type-specific f
 * `ntp`: reference ID, stratum, number of replies, number of errors
 * `http`: URI
 
+The option `ts` (ie. with `-opt ts`) prepends each result with the current UTC timestamp. This is mostly useful for result streaming.
+
 ### For Metadata
 
 The following fields are included for metadata:
@@ -149,6 +151,8 @@ The following fields are appended to the `some` output:
 
 * status checks:
     * list of probes in alerting status
+
+The option `ts` (ie. with `-opt ts`) prepends each result with the current UTC timestamp. This is mostly useful for result streaming.
 
 ## native
 
